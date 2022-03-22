@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">KitsuCatalog</string>
+    <string name="small_poster">маленький постер</string>
+    <string name="tvLabelRating">Рейтинг:</string>
+    <string name="tvTitle">TextView</string>
+    <string name="tvLabelTitle">Название:</string>
+    <string name="noneValue">TextView</string>
+    <string name="tvLabelReleaseDate">Дата релиза:</string>
+    <string name="tvLabelAgeRating">Возрастные ограничения:</string>
+    <string name="tvLabelDescription">Описание:</string>
+    <string name="watchTrailer">Смотреть трейлер</string>
+    <string name="tvLabelEpisodeCount">Количество серий:</string>
+    <string name="BigPoster">Постер</string>
+    <string name="ButtonWatchTrailer">Кнопка просмотра трейлера</string>
 </resources>
