@@ -1,18 +1,17 @@
-package com.stupkalex.kitsucatalog.data.api
+package com.stupkalex.kitsucatalog.data.network
 
-import com.stupkalex.kitsucatalog.data.pojo.AnimeListOfData
-import io.reactivex.Single
+import com.stupkalex.kitsucatalog.data.models.AnimeListOfDataDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
 
     @GET("anime")
-    fun getAnime(
+    suspend fun getAnime(
         @Query(QUERY_PARAM_PAGE_LIMIT) limit: Int,
         @Query(QUERY_PARAM_PAGE_OFFSET) offset: Int,
         @Query(QUERY_PARAM_SORT_BY) sort: String
-    ): Single<AnimeListOfData>
+    ): AnimeListOfDataDto
 
 
     companion object {

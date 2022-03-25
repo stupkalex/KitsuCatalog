@@ -27,7 +27,7 @@ class DetailActivity : AppCompatActivity() {
     private fun setupViewValue() {
         val animeItemId = intent.getIntExtra(EXTRA_FROM_ID, 0)
         viewModel.getAnimeItem(animeItemId)
-        viewModel.animeItem.observe(this) {
+        viewModel.getAnimeItem(animeItemId).observe(this) {
             with(binding) {
                 tvTitle.text = it.title
                 tvRating.text = String.format("%s / 100",it.averageRating)

@@ -1,11 +1,11 @@
-package com.stupkalex.kitsucatalog.data.pojo
+package com.stupkalex.kitsucatalog.data.models
 
 import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
 
 
-data class AnimeAttributes(
+data class AnimeAttributesDto(
     @SerializedName("description")
     @Expose
     val description: String? = null,
@@ -23,7 +23,7 @@ data class AnimeAttributes(
     val ageRatingGuide: String? = null,
     @SerializedName("posterImage")
     @Expose
-    val posterImage: AnimePosterImages? = null,
+    val posterImageDto: AnimePosterImagesDto? = null,
     @SerializedName("episodeCount")
     @Expose
     val episodeCount: Int = 0,

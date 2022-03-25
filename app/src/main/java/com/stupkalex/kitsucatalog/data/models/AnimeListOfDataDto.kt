@@ -1,12 +1,12 @@
-package com.stupkalex.kitsucatalog.data.pojo
+package com.stupkalex.kitsucatalog.data.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class AnimeListOfData(
+data class AnimeListOfDataDto(
     @SerializedName("data")
     @Expose
-    val data : List<AnimeObject>
+    val data : List<AnimeObjectDto>
 )
 
 

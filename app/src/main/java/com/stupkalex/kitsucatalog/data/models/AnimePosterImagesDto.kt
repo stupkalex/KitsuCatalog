@@ -1,9 +1,9 @@
-package com.stupkalex.kitsucatalog.data.pojo
+package com.stupkalex.kitsucatalog.data.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class AnimePosterImages(
+class AnimePosterImagesDto(
     @SerializedName("small")
     @Expose
     val small: String,

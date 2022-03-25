@@ -1,13 +1,10 @@
 package com.stupkalex.kitsucatalog.presentation
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
-import androidx.lifecycle.GeneratedAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.stupkalex.kitsucatalog.R
 import com.stupkalex.kitsucatalog.databinding.ActivityCatalogBinding
 import com.stupkalex.kitsucatalog.presentation.adapters.CatalogAdapter
 
@@ -23,8 +20,7 @@ class CatalogActivity : AppCompatActivity() {
         setContentView(binding.root)
         viewModel = ViewModelProvider.AndroidViewModelFactory(application)
             .create(CatalogViewModel::class.java)
-        viewModel.clearDatabase()
-        setupRecyclerView()
+                setupRecyclerView()
         viewModel.listAnime.observe(this) {
             adapter.submitList(it)
         }
@@ -39,7 +35,7 @@ class CatalogActivity : AppCompatActivity() {
         }
         adapter.onAnimeItemReachEndListener = object : CatalogAdapter.OnAnimeItemReachEndListener{
             override fun onAnimeReachEnd() {
-                viewModel.loadData(viewModel.offsetCount)
+              viewModel.loadData()
             }
 
         }

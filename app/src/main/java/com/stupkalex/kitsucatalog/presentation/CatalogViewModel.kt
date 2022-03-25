@@ -1,71 +1,47 @@
 package com.stupkalex.kitsucatalog.presentation
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import com.stupkalex.kitsucatalog.data.api.ApiFactory
+import androidx.lifecycle.viewModelScope
 import com.stupkalex.kitsucatalog.data.database.AppDatabase
-import com.stupkalex.kitsucatalog.data.entity.Anime
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.stupkalex.kitsucatalog.data.database.repository.AnimeRepositoryImpl
+import com.stupkalex.kitsucatalog.domain.DeleteAnimeUseCase
+import com.stupkalex.kitsucatalog.domain.GetAnimeListUseCase
+import com.stupkalex.kitsucatalog.domain.GetAnimeUseCase
+import com.stupkalex.kitsucatalog.domain.LoadDataUseCase
 import kotlinx.coroutines.launch
 
 
 class CatalogViewModel (application: Application) : AndroidViewModel(application) {
 
     var offsetCount = OFFSET_PAGE
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    private val database = AppDatabase.getInstance(application)
-    private val compositeDisposable = CompositeDisposable()
-    val listAnime = database.databaseDao().getAnimeList()
+    private val repository = AnimeRepositoryImpl(application)
 
-    fun loadData(offset: Int) {
-        val disposable = ApiFactory.apiService.getAnime(LIMIT_PAGE, offset, SORT_BY)
-            .map { it.data }
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                /*if(offsetCount == LIMIT_PAGE){
-                    clearDatabase()
-                }*/
-                for (i in it.indices) {
-                    val itemAnime = Anime(
-                        id = it[i].id,
-                        title = it[i].attributes.canonicalTitle,
-                        averageRating = it[i].attributes.averageRating,
-                        ageRatingGuide = it[i].attributes.ageRatingGuide,
-                        startDate = it[i].attributes.startDate,
-                        episodeCount = it[i].attributes.episodeCount,
-                        description = it[i].attributes.description,
-                        youtubeVideoId = it[i].attributes.youtubeVideoId,
-                        smallPoster = it[i].attributes.posterImage?.small,
-                        bigPoster =  it[i].attributes.posterImage?.original,
-                        ageRating = it[i].attributes.ageRating
-                    )
-                    database.databaseDao().insertAnime(itemAnime)
-                    offsetCount += LIMIT_PAGE
-                }
-            }, {
-                Log.d("TEST_TO_LOADING_DATA", it.message.toString())
-            })
-        compositeDisposable.add(disposable)
-    }
+    private val deleteAnimeUseCase = DeleteAnimeUseCase(repository)
+    private val getAnimeListUseCase = GetAnimeListUseCase(repository)
+    private val loadDataUseCase = LoadDataUseCase(repository)
+
+    val listAnime = getAnimeListUseCase()
 
     init {
-        loadData(OFFSET_PAGE)
-    }
-
-    fun clearDatabase(){
-        coroutineScope.launch {
-            database.databaseDao().deleteAll()
+        viewModelScope.launch {
+            loadDataUseCase(OFFSET_PAGE)
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
+    fun loadData(){
+        viewModelScope.launch {
+        loadDataUseCase(offsetCount)
+            offsetCount += LIMIT_PAGE
+        }
     }
+
+
+    fun clearDatabase(){
+       deleteAnimeUseCase()
+    }
+
+
 
     companion object {
         private const val LIMIT_PAGE = 20

@@ -1,12 +1,11 @@
 package com.stupkalex.kitsucatalog.presentation.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.squareup.picasso.Picasso
 import com.stupkalex.kitsucatalog.R
-import com.stupkalex.kitsucatalog.data.entity.Anime
+import com.stupkalex.kitsucatalog.domain.Anime
 
 class CatalogAdapter : ListAdapter<Anime, ItemViewHolder>(AnimeItemDiffCallback()) {
 

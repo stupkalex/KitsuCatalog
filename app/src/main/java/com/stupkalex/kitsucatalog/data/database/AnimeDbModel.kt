@@ -1,11 +1,11 @@
-package com.stupkalex.kitsucatalog.data.entity
+package com.stupkalex.kitsucatalog.data.database
 
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "anime_table", indices = [Index(value = ["id"], unique = true)])
-data class Anime(
+data class AnimeDbModel(
     @PrimaryKey(autoGenerate = true)
     val autoId: Int = 0,
     var id: Int = 0,
